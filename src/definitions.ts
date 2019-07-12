@@ -42,5 +42,24 @@ export interface FacebookAppEventsPlugin {
      * @param {number}  [valueToSum] any value to be added to added to a sum on each event
      * @returns {Promise<any>}
      */
-    logEvent(name: string, params?: Object, valueToSum?: number): Promise<any>;
+    logEvent(options: {name: string, params?: Object, valueToSum?: number}): Promise<any>;
 }
+
+export enum FacebookEventName {
+  completedRegistration = 'completedRegistration',
+  completedTutorial = 'completedTutorial',
+  viewedContent = 'viewedContent',
+  searched = 'searched',
+  rated = 'rated',
+  purchased = 'purchased',
+  addedToCart = 'addedToCart',
+  addedToWishlist = 'addedToWishlist',
+  addedPaymentInfo = 'addedPaymentInfo',
+  initiatedCheckout = 'initiatedCheckout',
+  achievedLevel = 'achievedLevel',
+  unlockedAchievement = 'unlockedAchievement',
+  spentCredits = 'spentCredits'
+}
+
+//purchased: return "fb_mobile_purchase" // Hard-coded as a string, since it's internal API of FBSDKCoreKit.
+

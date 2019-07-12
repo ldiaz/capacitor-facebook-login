@@ -81,14 +81,18 @@ public class FacebookLogin: CAPPlugin {
 @objc(FacebookAppEvents)
 public class FacebookAppEvents: CAPPlugin {
     @objc func logEvent(_ call: CAPPluginCall) {
-        guard let eventName = call.options["name"] as? String else {
+        guard let eventNameStr = call.options["name"] as? String else {
             call.reject("Invalid arguments. At least the event name is required")
             return
         }
     
-        AppEventsLogger.log(eventName)
+        //Uses the string values defined in the official wrapper, it handles if is custom or AppEvent
+        let eventName = AppEventName(rawValue: eventNameStr);
+        let event = AppEvent(name: eventName!)
+
+        AppEventsLogger.log(event);
         //TODO: add support to more complete method like
-        //AppEventsLogger.log(eventName: String, parameters: AppEvent.ParametersDictionary, valueToSum: Double?>, accessToken: AccessToken?)
+        //AppEventsLogger.log(<#T##eventName: String##String#>, parameters: <#T##AppEvent.ParametersDictionary#>, valueToSum: <#T##Double?#>, accessToken: <#T##AccessToken?#>)
 
         call.success()
     }
