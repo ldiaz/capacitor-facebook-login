@@ -1,7 +1,13 @@
 package jp.rdlabo.capacitor.plugin.facebook;
 
+import android.content.Context;
+
+import com.facebook.appevents.AppEventsConstants;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
+import com.getcapacitor.PluginCall;
+import com.getcapacitor.PluginMethod;
+import com.facebook.appevents.AppEventsLogger;
 
 
 @NativePlugin()
@@ -17,28 +23,19 @@ public class FacebookAppEvents extends Plugin {
             return;
         }
 
+        Context c = getContext();
+        AppEventsLogger logger = AppEventsLogger.newLogger(c);
+
+        if (eventNameString.equals("purchased")) {
+            //Correct way to log purchased event, but requires amount and other param
+            //logger.logPurchase();
+            logger.logEvent(AppEventsConstants.EVENT_NAME_PURCHASED);
+
+        } else {
+            logger.logEvent(eventNameString);
+        }
+
         call.success();
     }
 
-    /**
-    @objc func logEvent(_ call: CAPPluginCall) {
-        guard let eventNameStr = call.options["name"] as? String else {
-            call.reject("Invalid arguments. At least the event name is required")
-            return
-        }
-    
-        //Uses the string values defined in the official wrapper, it handles if is custom or AppEvent
-        let eventName = AppEventName(rawValue: eventNameStr);
-        let event = AppEvent(name: eventName!)
-
-        AppEventsLogger.log(event);
-        //TODO: add support to more complete method like
-        //AppEventsLogger.log(<#T##eventName: String##String#>, parameters: <#T##AppEvent.ParametersDictionary#>, valueToSum: <#T##Double?#>, accessToken: <#T##AccessToken?#>)
-
-        call.success()
-    } 
-    
-    
-    * 
-     */
 }
