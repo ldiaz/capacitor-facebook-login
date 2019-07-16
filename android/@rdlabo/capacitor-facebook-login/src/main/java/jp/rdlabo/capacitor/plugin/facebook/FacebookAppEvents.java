@@ -20,7 +20,7 @@ public class FacebookAppEvents extends Plugin {
 
     @PluginMethod()
     public void logEvent(PluginCall call) {
-        String eventNameString = call.getString("message");
+        String eventNameString = call.getString("name");
 
         if ( null == eventNameString || eventNameString.trim().isEmpty() ){
             call.reject("Invalid arguments. At least the event name is required");
