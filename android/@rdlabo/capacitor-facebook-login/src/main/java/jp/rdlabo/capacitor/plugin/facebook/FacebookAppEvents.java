@@ -40,7 +40,7 @@ public class FacebookAppEvents extends Plugin {
             if (params != null && params.length() >= 2) { //must contain both params
                 try {
                     amount = Double.valueOf( params.getDouble("amount") );
-                    currency = params.getString("Currency");
+                    currency = params.getString("currency");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
