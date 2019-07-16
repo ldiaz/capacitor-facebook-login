@@ -89,11 +89,29 @@ public class FacebookAppEvents: CAPPlugin {
         //Uses the string values defined in the official wrapper, it handles if is custom or AppEvent
         let eventName = AppEventName(rawValue: eventNameStr);
         let event = AppEvent(name: eventName!)
-
-        AppEventsLogger.log(event);
-        //TODO: add support to more complete method like
-        //AppEventsLogger.log(<#T##eventName: String##String#>, parameters: <#T##AppEvent.ParametersDictionary#>, valueToSum: <#T##Double?#>, accessToken: <#T##AccessToken?#>)
-
+        
+        
+        guard AppEventName.purchased == eventName else {
+            //TODO: add support to more complete method like
+            //AppEventsLogger.log(<#T##eventName: String##String#>, parameters: <#T##AppEvent.ParametersDictionary#>, valueToSum: <#T##Double?#>, accessToken: <#T##AccessToken?#>)
+            AppEventsLogger.log(event);
+            
+            call.success()
+            
+            return;
+        }
+        
+        var amount: Double = 0.0
+        var currency: String = "USD"
+        
+        if let params = call.getObject("params"), let customAmount = params["amount"] as? Double, let customCurr = params["currency"] as? String {
+            amount = customAmount
+            currency = customCurr
+        }
+        
+        //Call specific purchased event
+        AppEvent.purchased(amount: amount, currency: currency)
+        
         call.success()
     }
 }
