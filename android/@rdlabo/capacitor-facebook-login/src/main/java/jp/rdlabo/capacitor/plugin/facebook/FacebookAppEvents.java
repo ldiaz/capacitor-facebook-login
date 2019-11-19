@@ -2,6 +2,7 @@ package jp.rdlabo.capacitor.plugin.facebook;
 
 import android.content.Context;
 
+import com.facebook.appevents.AppEventsConstants;
 import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -31,7 +32,7 @@ public class FacebookAppEvents extends Plugin {
         Context c = getContext();
         AppEventsLogger logger = AppEventsLogger.newLogger(c);
 
-        if (eventNameString.equals("purchased")) {
+        if (eventNameString.equals(AppEventsConstants.EVENT_NAME_PURCHASED)) {
             //Default values
             Double amount = 0.0;
             String currency = "USD";
