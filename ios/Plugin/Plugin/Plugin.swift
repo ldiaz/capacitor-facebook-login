@@ -95,7 +95,7 @@ public class FacebookAppEvents: CAPPlugin {
             //AppEventsLogger.log(<#T##eventName: String##String#>, parameters: <#T##AppEvent.ParametersDictionary#>, valueToSum: <#T##Double?#>, accessToken: <#T##AccessToken?#>)
             AppEventsLogger.log(event);
             
-            call.success(["result": "success", "eventName": eventName?.rawValue])
+            call.success(["result": "success", "eventName": eventName?.rawValue  ?? ""])
             
             return;
         }
@@ -109,7 +109,7 @@ public class FacebookAppEvents: CAPPlugin {
         }
         
         //Call specific purchased event
-        var purchaseEvent = AppEvent.purchased(amount: amount, currency: currency)
+        let purchaseEvent = AppEvent.purchased(amount: amount, currency: currency)
         AppEventsLogger.log(purchaseEvent);
         
         call.success(["result": "success", "eventName": purchaseEvent.name.rawValue])
