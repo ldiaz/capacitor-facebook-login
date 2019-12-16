@@ -112,7 +112,7 @@ public class FacebookAppEvents: CAPPlugin {
         var purchaseEvent = AppEvent.purchased(amount: amount, currency: currency)
         AppEventsLogger.log(purchaseEvent);
         
-        call.success(["result": "success", "eventName", purchaseEvent.name.rawValue])
+        call.success(["result": "success", "eventName": purchaseEvent.name.rawValue])
     }
 }
 
