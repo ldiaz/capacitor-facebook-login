@@ -90,13 +90,12 @@ public class FacebookAppEvents: CAPPlugin {
         let eventName = AppEventName(rawValue: eventNameStr);
         let event = AppEvent(name: eventName!)
         
-        
         guard AppEventName.purchased == eventName else {
             //TODO: add support to more complete method like
             //AppEventsLogger.log(<#T##eventName: String##String#>, parameters: <#T##AppEvent.ParametersDictionary#>, valueToSum: <#T##Double?#>, accessToken: <#T##AccessToken?#>)
             AppEventsLogger.log(event);
             
-            call.success()
+            call.success(["result": "success", "eventName": eventName?.rawValue])
             
             return;
         }
@@ -110,9 +109,10 @@ public class FacebookAppEvents: CAPPlugin {
         }
         
         //Call specific purchased event
-        AppEvent.purchased(amount: amount, currency: currency)
+        var purchaseEvent = AppEvent.purchased(amount: amount, currency: currency)
+        AppEventsLogger.log(purchaseEvent);
         
-        call.success()
+        call.success(["result": "success", "eventName", purchaseEvent.name.rawValue])
     }
 }
 
